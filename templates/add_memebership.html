@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+    <h2 style="color: #5a67d8; margin-bottom: 10px;">New Membership</h2>
+    <p style="color: #888; font-size: 14px; margin-bottom: 20px;">
+        Member ID will be generated automatically.
+    </p>
+
+    <form method="post">
+        <input type="text" name="name" placeholder="Enter Full Name" required 
+               style="border: 1px solid #cbd5e0; outline: none;">
+        
+        <div style="text-align: left; margin: 15px 0;">
+            <label style="color: #4a5568; font-size: 14px; font-weight: 600;">Subscription Plan:</label>
+            <select name="duration" required>
+                <option value="" disabled selected>Choose Duration</option>
+                <option value="6 Months">6 Months Plan</option>
+                <option value="1 Year">1 Year Plan</option>
+                <option value="2 Years">2 Years Plan</option>
+            </select>
+        </div>
+        
+        <button type="submit" style="background: #a29bfe; transition: 0.3s;">
+            Create Membership
+        </button>
+    </form>
+    
+    <div style="margin-top: 20px;">
+        <a href="/admin" style="text-decoration: none; color: #5a67d8; font-size: 14px;">← Cancel & Go Back</a>
+    </div>
+</div>
+{% endblock %}

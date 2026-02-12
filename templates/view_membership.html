@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container" style="text-align: center; padding: 20px;">
+    <h2 style="color: #5a67d8; margin-bottom: 20px;">Membership Directory</h2>
+
+    <div style="margin-bottom: 30px;">
+        <input type="text" id="searchInput" onkeyup="filterTable()" 
+               placeholder="🔍 Search by name or member ID..." 
+               style="width: 80%; max-width: 550px; padding: 12px 25px; border-radius: 30px; border: 2px solid #a29bfe; outline: none; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+    </div>
+
+    <div style="overflow-x: auto;">
+        <table id="mTable" style="width: 90%; margin: auto; border-collapse: collapse; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+            <thead>
+                <tr style="background-color: #f8faff; border-bottom: 2px solid #edf2f7;">
+                    <th style="padding: 18px; color: #4a5568;">ID</th>
+                    <th style="padding: 18px; color: #4a5568;">Full Name</th>
+                    <th style="padding: 18px; color: #4a5568;">Member ID</th>
+                    <th style="padding: 18px; color: #4a5568;">Joined Date</th>
+                    <th style="padding: 18px; color: #4a5568;">Status</th>
+                    {% if session['role'] == 'admin' %}
+                    <th style="padding: 18px; color: #4a5568;">Action</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for m in members %}
+                <tr style="border-bottom: 1px solid #f0f4f8; transition: 0.3s;" onmouseover="this.style.backgroundColor='#fcfdff'" onmouseout="this.style.backgroundColor='transparent'">
+                    <td style="padding: 15px;">{{ m.id }}</td>
+                    <td style="padding: 15px; font-weight: 500;">{{ m.name }}</td>
+                    <td style="padding: 15px;"><code style="background: #edf2f7; padding: 4px 8px; border-radius: 5px;">{{ m.member_no }}</code></td>
+                    <td style="padding: 15px; color: #718096;">{{ m.join_date }}</td>
+                    <td style="padding: 15px;">
+                        <span style="background: {{ m.color }}; color: {{ m.text_color }}; padding: 6px 14px; border-radius: 20px; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">
+                            {{ m.status }}
+                        </span>
+                    </td>
+                    {% if session['role'] == 'admin' %}
+                    <td style="padding: 15px;">
+                        <a href="{{ url_for('delete_member', id=m.id) }}" 
+                           class="logout-btn" 
+                           style="background:#ffd8d8; color:#a33b3b; font-size:12px; padding: 6px 15px; border-radius: 8px; text-decoration: none;"
+                           onclick="return confirm('Are you sure you want to delete this member?')">
+                           Delete
+                        </a>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div style="margin-top: 40px;">
+        <a href="/{{ session['role'] }}" style="text-decoration: none; color: #5a67d8; font-weight: 600; font-size: 14px;">
+            ← Back to Dashboard
+        </a>
+    </div>
+</div>
+
+<script>
+function filterTable() {
+    let input = document.getElementById("searchInput").value.toUpperCase();
+    let rows = document.querySelector("#mTable tbody").getElementsByTagName("tr");
+
+    for (let i = 0; i < rows.length; i++) {
+        let name = rows[i].getElementsByTagName("td")[1].textContent.toUpperCase();
+        let id = rows[i].getElementsByTagName("td")[2].textContent.toUpperCase();
+        
+        if (name.includes(input) || id.includes(input)) {
+            rows[i].style.display = "";
+        } else {
+            rows[i].style.display = "none";
+        }
+    }
+}
+</script>
+{% endblock %}

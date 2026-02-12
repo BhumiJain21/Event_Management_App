@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Event Master Pro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="brand">
+                <img src="{{ url_for('static', filename='logo.jpg') }}" class="nav-logo">
+                <span>Event Management</span>
+            </div>
+            <div class="nav-links">
+                {% if session.get('user') %}
+                    <span class="welcome-text">Hi, {{ session['user'] }}</span>
+                    <a href="/logout" class="logout-btn">Logout</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

@@ -1,5 +1,4 @@
 🎊 Event Management Membership System
-
 A modern, advanced web application designed to manage event memberships with a focus on User Experience (UX) and Pastel Design. The system features real-time status tracking, auto-generation of IDs, and role-based access control.
 
 ✨ Key Features
